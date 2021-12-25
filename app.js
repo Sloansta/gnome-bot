@@ -28,7 +28,8 @@ client.on('message', (channel, tags, msg, self) => {
     switch (msg) {
         case '!help':
             client.say(chan, `@${tags.username}, I'm a new bot, so
-            I am currently working on the commands. Sorry about that :/`)
+            I am currently working on the commands. Sorry about that :/ 
+            If you need help, please talk to the gnome that is streaming!`)
             break;
     
         default:
