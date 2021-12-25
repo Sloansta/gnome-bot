@@ -1,0 +1,23 @@
+{
+  "name": "gnome-bot",
+  "version": "1.0.0",
+  "description": "A bot for a gnome friends twitch channel",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sloansta/gnome-bot.git"
+  },
+  "author": "Sloan",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Sloansta/gnome-bot/issues"
+  },
+  "homepage": "https://github.com/Sloansta/gnome-bot#readme",
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "tmi.js": "^1.8.5"
+  }
+}
