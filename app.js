@@ -22,7 +22,7 @@ client.connect().catch(console.error)
 client.on('message', (channel, tags, msg, self) => {
     if(self) return
 
-    if(randomNum(20) <= 1)
+    if(randomNum(50) <= 1)
         client.say(chan, `@${tags.username} OwO`)
 
     console.log(msg)
