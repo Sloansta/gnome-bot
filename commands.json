@@ -1,0 +1,26 @@
+[
+    {
+        "title": "!help",
+        "message": "!twitter !help !bot !info !schedule"
+    },
+
+    {
+        "title": "!twitter",
+        "message": "Yo checkout the Twitter https://twitter.com/CsethJor"
+    },
+
+    {
+        "title": "!bot",
+        "message": "This Gnome-bot, a chat bot made for Csethiroth out of spite. Check it out here: https://github.com/Sloansta/gnome-bot"
+    },
+
+    {
+        "title": "!info",
+        "message": "Hey my name is Cseth and I stream Minecraft and league of legends."
+    },
+
+    {
+        "title": "!schedule",
+        "message": "I don't have a set schedule but I usually get on at after 19:00 GMT every other day. Feel free to tune in :)"
+    }
+]

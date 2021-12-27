@@ -1,5 +1,6 @@
 require('dotenv').config()
 const tmi = require('tmi.js')
+const commands = require('./commands.json')
 const chan = process.env.TWITCH_CHANNEL
 
 const client = new tmi.Client({
@@ -25,17 +26,12 @@ client.on('message', (channel, tags, msg, self) => {
         client.say(chan, `@${tags.username} OwO`)
 
     console.log(msg)
-    switch (msg) {
-        case '!help':
-            client.say(chan, `@${tags.username}, I'm a new bot, so
-            I am currently working on the commands. Sorry about that :/ 
-            If you need help, please talk to the gnome that is streaming!`)
-            break;
-    
-        default:
-            console.log(msg)
-            break;
-    }
+    if(msg.charAt(0) == "!") {
+        for(let i = 0; i < commands.length; i++) {
+            if(commands[i].title.toLowerCase() == msg.toLowerCase())
+                 client.say(chan, `@${tags.username}, ${commands[i].message}`)
+        }
+     }
 })
 
 // function for things other than commands 
