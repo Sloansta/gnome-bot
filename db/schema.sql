@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS gnome_bot;
+
+CREATE DATABASE gnome_bot;

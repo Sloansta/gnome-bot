@@ -1,6 +1,8 @@
 require('dotenv').config()
 const tmi = require('tmi.js')
 const commands = require('./commands.json')
+const Viewer = require('./Models/Viewer')
+const db = require('./config/connection')
 const chan = process.env.TWITCH_CHANNEL
 
 const client = new tmi.Client({
@@ -17,10 +19,26 @@ const client = new tmi.Client({
     channels: [`${process.env.TWITCH_CHANNEL}`]
 })
 
-client.connect().catch(console.error)
+db.sync({ force: false }).then(() => {
+    client.connect().catch(console.error)
+})
 
 client.on('message', (channel, tags, msg, self) => {
     if(self) return
+
+    checkViewerExist(tags.username).then(data => {
+        if(data) {
+            console.log(tags.username + ' Exists!')
+         } else {
+            Viewer.create({
+                username: tags.username,
+                points: 0
+            }).then(dbViewerData => console.log(dbViewerData))
+              .catch(err => {
+                  console.log(err)
+              })
+        }
+    })
 
     if(randomNum(50) <= 1)
         client.say(chan, `@${tags.username} OwO`)
@@ -33,6 +51,16 @@ client.on('message', (channel, tags, msg, self) => {
         }
      }
 })
+
+// function that checks if the viewer is already in the database or not
+function checkViewerExist(username) {
+    return Viewer.count({ where: {username: username}})
+        .then(count => {
+            if(count != 0)
+                return true
+            return false
+        })
+}
 
 // function for things other than commands 
 function randomNum(x) {

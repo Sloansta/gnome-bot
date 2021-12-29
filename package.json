@@ -18,6 +18,8 @@
   "homepage": "https://github.com/Sloansta/gnome-bot#readme",
   "devDependencies": {
     "dotenv": "^10.0.0",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.12.4",
     "tmi.js": "^1.8.5"
   }
 }
