@@ -28,6 +28,7 @@ client.on('message', (channel, tags, msg, self) => {
 
     checkViewerExist(tags.username).then(data => {
         if(data) {
+            // this will increment a users points if the user exists, eventually
             console.log(tags.username + ' Exists!')
          } else {
             Viewer.create({
