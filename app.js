@@ -58,15 +58,17 @@ client.on('message', (channel, tags, msg, self) => {
         }
      }
 
-     /*if(msg == 'points')
-        client.say(chan, getPoints(tags.username))*/
+     if(msg == ';points')
+        getPoints(tags.username).then(data => {
+            client.say(chan, data)
+        })
 })
 
 // get this function working, points should be displayed when user types command
 function getPoints(user) {
-    Viewer.findOne({ where: {username: user}})
+    return Viewer.findOne({ where: {username: user}})
         .then(usrData => {
-            return `${username} currently has ${usrData.points} points!`
+            return `${user} currently has ${usrData.points} points!`
         }).catch(err => {
             console.log(err)
             return `Could not find ${user}`
