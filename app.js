@@ -58,7 +58,7 @@ client.on('message', (channel, tags, msg, self) => {
         }
      }
 
-     if(msg == ';points')
+     if(msg.toLowerCase() == ';points')
         getPoints(tags.username).then(data => {
             client.say(chan, data)
         })

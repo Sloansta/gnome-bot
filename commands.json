@@ -1,7 +1,7 @@
 [
     {
         "title": "!help",
-        "message": "!twitter !help !bot !info !schedule"
+        "message": "!twitter !help !bot !info !schedule !points"
     },
 
     {
@@ -22,5 +22,10 @@
     {
         "title": "!schedule",
         "message": "I don't have a set schedule but I usually get on at after 19:00 GMT every other day. Feel free to tune in :)"
+    },
+
+    {
+        "title": "!points",
+        "message": "Use ;points to check how many points you have"
     }
 ]
