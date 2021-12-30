@@ -29,7 +29,13 @@ client.on('message', (channel, tags, msg, self) => {
     checkViewerExist(tags.username).then(data => {
         if(data) {
             // this will increment a users points if the user exists, eventually
-            console.log(tags.username + ' Exists!')
+           Viewer.findOne({
+               where: {username: tags.username}
+           }).then(usr => {
+               usr.points++
+               usr.save()
+           })
+
          } else {
             Viewer.create({
                 username: tags.username,
@@ -51,7 +57,21 @@ client.on('message', (channel, tags, msg, self) => {
                  client.say(chan, `@${tags.username}, ${commands[i].message}`)
         }
      }
+
+     /*if(msg == 'points')
+        client.say(chan, getPoints(tags.username))*/
 })
+
+// get this function working, points should be displayed when user types command
+function getPoints(user) {
+    Viewer.findOne({ where: {username: user}})
+        .then(usrData => {
+            return `${username} currently has ${usrData.points} points!`
+        }).catch(err => {
+            console.log(err)
+            return `Could not find ${user}`
+        })
+}
 
 // function that checks if the viewer is already in the database or not
 function checkViewerExist(username) {
