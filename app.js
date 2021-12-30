@@ -58,13 +58,14 @@ client.on('message', (channel, tags, msg, self) => {
         }
      }
 
+     // placeholder code until we get more functional commands (commands that start with ;)
      if(msg.toLowerCase() == ';points')
         getPoints(tags.username).then(data => {
             client.say(chan, data)
         })
 })
 
-// get this function working, points should be displayed when user types command
+// function that fetches the users points from the database 
 function getPoints(user) {
     return Viewer.findOne({ where: {username: user}})
         .then(usrData => {
