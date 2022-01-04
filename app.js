@@ -3,6 +3,7 @@ const tmi = require('tmi.js')
 const commands = require('./commands.json')
 const Viewer = require('./Models/Viewer')
 const db = require('./config/connection')
+const handlePointsCommand = require('./src/points')
 const chan = process.env.TWITCH_CHANNEL
 
 const client = new tmi.Client({
@@ -32,7 +33,9 @@ client.on('message', (channel, tags, msg, self) => {
            Viewer.findOne({
                where: {username: tags.username}
            }).then(usr => {
-               usr.points++
+               if(msg.charAt(0) != '!' && msg.charAt(0) != ';') 
+                    usr.points++
+
                usr.save()
            })
 
@@ -47,6 +50,7 @@ client.on('message', (channel, tags, msg, self) => {
         }
     })
 
+    // just for fun lol
     if(randomNum(50) <= 1)
         client.say(chan, `@${tags.username} OwO`)
 
@@ -59,10 +63,17 @@ client.on('message', (channel, tags, msg, self) => {
      }
 
      // placeholder code until we get more functional commands (commands that start with ;)
-     if(msg.toLowerCase() == ';points')
+    if(msg.toLowerCase() == ';points')
         getPoints(tags.username).then(data => {
             client.say(chan, data)
+    })
+
+    if(msg.charAt(0) == ';' && msg.toLowerCase() != ';points') {
+        handlePointsCommand(tags.username, msg).then(data => {
+            client.say(chan, data)
         })
+    }
+
 })
 
 // function that fetches the users points from the database 
