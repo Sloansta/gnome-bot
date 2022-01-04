@@ -1,7 +1,7 @@
 [
     {
         "title": "!help",
-        "message": "!twitter !help !bot !info !schedule !points"
+        "message": "!twitter !help !bot !info !schedule !points !redeem"
     },
 
     {
@@ -27,5 +27,10 @@
     {
         "title": "!points",
         "message": "Use ;points to check how many points you have"
+    },
+
+    {
+        "title": "!redeem",
+        "message": "Use ;redeem <amount> to spend your points!"
     }
 ]
