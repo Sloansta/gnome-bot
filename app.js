@@ -3,7 +3,7 @@ const tmi = require('tmi.js')
 const commands = require('./commands.json')
 const Viewer = require('./Models/Viewer')
 const db = require('./config/connection')
-const handlePointsCommand = require('./src/points')
+const { redeemPoints, getPoints } = require('./src/points')
 const chan = process.env.TWITCH_CHANNEL
 
 const client = new tmi.Client({
@@ -62,30 +62,13 @@ client.on('message', (channel, tags, msg, self) => {
         }
      }
 
-     // placeholder code until we get more functional commands (commands that start with ;)
-    if(msg.toLowerCase() == ';points')
-        getPoints(tags.username).then(data => {
-            client.say(chan, data)
-    })
-
-    if(msg.charAt(0) == ';' && msg.toLowerCase() != ';points') {
-        handlePointsCommand(tags.username, msg).then(data => {
-            client.say(chan, data)
-        })
+    // checks to see if a functional command is being called ';'
+    if(msg.charAt(0) == ';') {
+        const msgArr = msg.split(' ')
+        functionCommands(tags.username, msgArr)
     }
 
 })
-
-// function that fetches the users points from the database 
-function getPoints(user) {
-    return Viewer.findOne({ where: {username: user}})
-        .then(usrData => {
-            return `${user} currently has ${usrData.points} points!`
-        }).catch(err => {
-            console.log(err)
-            return `Could not find ${user}`
-        })
-}
 
 // function that checks if the viewer is already in the database or not
 function checkViewerExist(username) {
@@ -97,6 +80,24 @@ function checkViewerExist(username) {
         })
 }
 
+// function that is called when a functional command is indicated ';'
+function functionCommands(usr, msgArr) {
+    switch(msgArr[0]) {
+        case ';redeem':
+            redeemPoints(usr, msgArr[1]).then(data => {
+                client.say(chan, data)
+            })
+            break
+        case ';points':
+            getPoints(usr).then(data => {
+                client.say(chan, data)
+            })
+            break
+        default: 
+            client.say(chan, `@${usr}, that is not a valid command!`)
+            break
+    }
+}
 // function for things other than commands 
 function randomNum(x) {
     return Math.floor(Math.random() * x)
