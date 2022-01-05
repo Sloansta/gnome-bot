@@ -31,8 +31,8 @@ function redeemPoints(usrnm, amount) {
 }
 
 // function that fetches the users points from the database or, fetches points of a different user given otherUser isn't undefined
-function getPoints(user, otherUser) {
-    if(otherUser == undefined) {
+function getPoints(user, otherUser = '') {
+    if(otherUser == '') {
         return Viewer.findOne({ where: {username: user}})
         .then(usrData => {
             return `@${user} currently has ${usrData.points} points!`
