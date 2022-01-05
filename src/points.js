@@ -30,15 +30,25 @@ function redeemPoints(usrnm, amount) {
     });
 }
 
-// function that fetches the users points from the database 
-function getPoints(user) {
-    return Viewer.findOne({ where: {username: user}})
+// function that fetches the users points from the database or, fetches points of a different user given otherUser isn't undefined
+function getPoints(user, otherUser) {
+    if(otherUser == undefined) {
+        return Viewer.findOne({ where: {username: user}})
         .then(usrData => {
             return `@${user} currently has ${usrData.points} points!`
         }).catch(err => {
             console.log(err)
             return `Could not find ${user}`
         })
+    } else {
+        return Viewer.findOne({ where: {username: otherUser}})
+        .then(usrData => {
+            return `@${user}, ${otherUser} currently has ${usrData.points} points!`
+        }).catch(err => {
+            console.log(err)
+            return `@${user}, could not find ${otherUser}`
+        })
+    }
 }
 
 module.exports = {

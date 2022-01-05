@@ -89,9 +89,15 @@ function functionCommands(usr, msgArr) {
             })
             break
         case ';points':
-            getPoints(usr).then(data => {
-                client.say(chan, data)
-            })
+            if(msgArr.length == 1) {
+                getPoints(usr).then(data => {
+                    client.say(chan, data)
+                })
+            } else {
+                getPoints(usr, msgArr[1]).then(data => {
+                    client.say(chan, data)
+                })
+            }
             break
         default: 
             client.say(chan, `@${usr}, that is not a valid command!`)

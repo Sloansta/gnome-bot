@@ -26,7 +26,7 @@
 
     {
         "title": "!points",
-        "message": "Use ;points to check how many points you have"
+        "message": "Use ;points to check how many points you have, or ;points <user> to see how many an other user has."
     },
 
     {
