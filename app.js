@@ -3,7 +3,7 @@ const tmi = require('tmi.js')
 const commands = require('./commands.json')
 const Viewer = require('./Models/Viewer')
 const db = require('./config/connection')
-const { redeemPoints, getPoints } = require('./src/points')
+const { redeemPoints, getPoints, sendPoints } = require('./src/points')
 const chan = process.env.TWITCH_CHANNEL
 
 const client = new tmi.Client({
@@ -94,10 +94,18 @@ function functionCommands(usr, msgArr) {
                     client.say(chan, data)
                 })
             } else {
-                getPoints(usr, msgArr[1]).then(data => {
+                const otherUser = msgArr[1].toLowerCase()
+                getPoints(usr, otherUser).then(data => {
                     client.say(chan, data)
                 })
             }
+            break
+        case ';send':
+            const receivingUser = msgArr[2].toLowerCase()
+            const amount = msgArr[1]
+            sendPoints(usr, amount, receivingUser).then((data) => {
+            client.say(chan, data)
+            })
             break
         default: 
             client.say(chan, `@${usr}, that is not a valid command!`)
